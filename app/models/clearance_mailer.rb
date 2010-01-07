@@ -20,4 +20,11 @@ class ClearanceMailer < ActionMailer::Base
     body      :user => user
   end
 
+  def invitation(invite)
+    from       DO_NOT_REPLY
+    recipients invite.email
+    subject    "Private invitation to join"
+    body       :invite => invite
+  end
+  
 end

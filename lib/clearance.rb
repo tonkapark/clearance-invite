@@ -4,3 +4,4 @@ require 'clearance/extensions/routes'
 
 require 'clearance/authentication'
 require 'clearance/user'
+require 'clearance/invite'

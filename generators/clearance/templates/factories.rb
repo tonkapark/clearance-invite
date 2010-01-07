@@ -11,3 +11,8 @@ end
 Factory.define :email_confirmed_user, :parent => :user do |user|
   user.email_confirmed { true }
 end
+
+Factory.define :invite do |i|
+  i.name  { "Full Name"}
+  i.email   { Factory.next :email }
+end

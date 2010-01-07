@@ -8,14 +8,23 @@ class Clearance::UsersController < ApplicationController
     @user = ::User.new(params[:user])
     render :template => 'users/new'
   end
-
+ 
   def create
     @user = ::User.new params[:user]
-    if @user.save
-      flash_notice_after_create
-      redirect_to(url_after_create)
+    invite_code = params[:invite_code]
+    @invite = ::Invite.find_redeemable(invite_code)
+ 
+    if invite_code && @invite
+      if @user.save
+        @invite.redeemed!        
+        flash_notice_after_create
+        redirect_to(url_after_create)
+      else
+        render :template => 'users/new'
+      end
     else
-      render :template => 'users/new'
+      flash.now[:notice] = "Sorry, only invited users are allowed to sign up."
+      render :action => "new"
     end
   end
 
@@ -29,6 +38,6 @@ class Clearance::UsersController < ApplicationController
   end
 
   def url_after_create
-    new_session_url
+    sign_in_url
   end
 end

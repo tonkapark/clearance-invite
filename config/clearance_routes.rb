@@ -27,4 +27,11 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'clearance/sessions',
     :action     => 'destroy',
     :method     => :delete
+    
+  #invitations
+  map.resources :invites, :controller => 'clearance/invites'
+    
+  map.send_invitation '/send_invitation/:id', :controller => "clearance/invites", :action => "send_invitation"
+  map.redeem_invitation '/sign_up/:invite_code', :controller => 'clearance/users', :action => 'new'      
+        
 end
